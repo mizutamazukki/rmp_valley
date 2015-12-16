@@ -1,0 +1,62 @@
+= include_gon
+= stylesheet_link_tag 'story_game', media:'all'
+= javascript_include_tag 'enchant'
+
+#read_text
+
+#wholepage.wholepage style="background-color:red"
+  #game 
+    /! ←このidはCSSに対応すれば何でも良い
+    #enchant-stage style="width:100%;height:650px"
+  
+  script src="/assets/story-enchant.js"
+
+  #programArea
+    /! Dropエリア
+    #dropArea.panel.panel-info
+      .panel-heading
+        strong style="font-size:25px"  エディターエリア
+  
+      .panel-body
+        button#activateCode.btn-info 実行
+        br
+          | ここにブロックを持ってきます
+          #drop-check
+            ul#sort-drop-area
+              /! ここにブロックがくる
+    /! ここまでDropエリア
+    /! Dragエリア
+    #dragArea.panel.panel-info
+      .panel-heading
+        strong style="font-size:25px"  ブロックエリア
+      br
+      ul
+        - @blocks.each do |block|
+          li.panel.panel-default id="block_#{block.id}" type="hidden" value="#{block.id}"
+            | #{block.name}
+          br
+    /! ここまでDragエリア
+  
+  #clearPopup.panel.panel-info
+    .panel-heading 
+      strong style="font-size:30px;" ステージクリア!!!! 
+    .panel-body
+      #clearPopupGetBlockInfo style="text-align:center"
+      strong style="font-size:20px;text-align:center" トップページに戻る
+      br
+      input.btn-primary.btn-lg onClick="location.href='/map'" type="button" value="終了"
+  #gameOverPopup.panel.panel-info
+    .panel-heading 
+      strong style="font-size:30px;" ゲームオーバー
+    .panel-body
+      #gameOverGetBlockInfo
+      strong style="font-size:20px;text-align:center" 
+      | ゴールできなかったよ
+      br 
+      | どうしてもわからなかったらヒントを見てみよう!!
+      #hint.panel.panel-default style="visibility:hidden"
+      br
+      input.btn-info.btn-lg onClick="location.reload()" type="button" value="やりなおす"
+      input.btn-info.btn-lg onClick="location.href='/map'" type="button" value="ゲームをやめる"
+      input.btn-info.btn-lg onClick="showHint()" type="button" value="ヒントを見る" name="hint_button"
+  

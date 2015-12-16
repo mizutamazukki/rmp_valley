@@ -1,0 +1,13 @@
+= stylesheet_link_tag 'error', media:'all'
+#error_code
+	h1 
+		#code 500 サーバーエラー
+
+
+
+#message style="font-size:35px"
+	| サーバーでエラーが発生してるよ 迷惑をかけてごめんね。。。
+    =image_tag("error/error_chara.png")
+
+#link_to_top style="font-size:30px"
+   	a (href="/") トップページにもどる

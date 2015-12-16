@@ -1,0 +1,78 @@
+<link data-turbolinks-track="true" href="/assets/index.css">
+<script data-turbolinks-track="true"src="/assets/jquery/jquery-1.7.2.js"></script>
+
+<%= stylesheet_link_tag "application", media: "all",
+                                       "data-turbolinks-track" => true %>
+<%= stylesheet_link_tag "top_page",media:'all',"data-turbolinks-track"=>true %>
+
+<nav><button class="btn btn-primary" id="showRightPush" style="float:right;right:10px;position:absolute" >プロフィール</button></nav>
+<br>>
+<!-- プロフィールスライド用 -->
+<nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right " id="cbp-spmenu-s2" style="padding:10px">
+    <button class="btn btn-default" id="slideExit">&nbsp;バーを非表示</button>
+    <br>
+
+    <div style="font-size:20px">
+      <br>
+      <div id="user_profile_img"><%= image_tag('mapImg/default_user_img.png') %></div>
+      <br>
+      <p>名前:<strong><%= current_user.name %></strong></P>
+      <p>ステージ数:<strong><%= current_user.stage%></strong></P>
+      <p>取得したブロック</p> 
+      <% @blocks.each do |block| %>
+        <div class="panel" style="width:80%;float:center">
+          <%= block.name %>
+        </div>
+      <% end%>
+    </div>
+</nav>
+
+<div style="text-align:center;" class="center">
+  <%= image_tag(@background_img_path,:width=>"80%",:size=>"100%,100%")%>
+  <br><br><br>
+  <div id="stage_buttons" style="bottom:3%;">
+  </div>
+</div>
+
+
+
+<script>
+  //ステージボタン生成
+  for(var i=1;i<=10;i++){
+    if(i <= <%= current_user.stage%>){
+      $("#stage_buttons").append($("<button>ステージ"+i+"</button>").attr("class", "map").attr("style", "display:inline").attr("onClick", "goToGameWindow("+i+")"));  
+      if(i%5==0){
+        $("#stage_buttons").append("<br><br>");  
+      }else{
+        $("#stage_buttons").append("&nbsp;&nbsp;&nbsp;");  
+      }
+    }else{
+      $("#stage_buttons").append($("<button>ステージ"+i+"</button>").attr("class", "map_disable").attr("style", "display:inline"));  
+      if(i%5==0){
+        $("#stage_buttons").append("<br><br>");  
+      }else{
+        $("#stage_buttons").append("&nbsp;&nbsp;&nbsp;");  
+      }
+    }
+  }
+function goToGameWindow(num){
+  location.href = "/storyGame?stageNum=" + num;
+}
+
+var menuRight = document.getElementById( 'cbp-spmenu-s2' ),
+showRight = document.getElementById( 'showRight' ),
+showRightPush = document.getElementById( 'showRightPush' ),
+slideExit = document.getElementById( 'slideExit' ),
+body = document.body;
+
+showRightPush.onclick = function() {
+              classie.toggle( this, 'active' );
+              classie.toggle( menuRight, 'cbp-spmenu-open' );
+              
+            };
+slideExit.onclick = function(){
+        classie.toggle( this, 'active' );
+        classie.toggle( menuRight, 'cbp-spmenu-open' );
+      }
+
+</script>
